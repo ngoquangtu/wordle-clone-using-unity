@@ -115,7 +115,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5032487628623746397}
   - component: {fileID: 4474345869297612272}
-  - component: {fileID: 6915845427496378905}
   m_Layer: 5
   m_Name: Board
   m_TagString: Untagged
@@ -174,40 +173,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6915845427496378905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706766367037499583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb465afe735a1a4db8612fff165f671, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rows: []
-  rowIndex: 0
-  columnIndex: 0
-  emptyState:
-    fillColor: {r: 0.07058824, g: 0.07058824, b: 0.07450981, a: 1}
-    outlineColor: {r: 0.22745098, g: 0.22745098, b: 0.23529412, a: 1}
-  occupiedState:
-    fillColor: {r: 0.07058824, g: 0.07058824, b: 0.07450981, a: 1}
-    outlineColor: {r: 0.3372549, g: 0.34117648, b: 0.34509805, a: 1}
-  correctState:
-    fillColor: {r: 0.3254902, g: 0.5529412, b: 0.30588236, a: 1}
-    outlineColor: {r: 0.3254902, g: 0.5529412, b: 0.30588236, a: 1}
-  wrongSpotState:
-    fillColor: {r: 0.70980394, g: 0.62352943, b: 0.23137255, a: 1}
-    outlineColor: {r: 0.70980394, g: 0.62352943, b: 0.23137255, a: 1}
-  incorrectState:
-    fillColor: {r: 0.22745098, g: 0.22745098, b: 0.23529412, a: 1}
-    outlineColor: {r: 0.22745098, g: 0.22745098, b: 0.23529412, a: 1}
-  tryAgainButton: {fileID: 843117606337059794}
-  newWordButton: {fileID: 5440036412860407893}
-  invalidWordText: {fileID: 9081649101210417320}
-  currentRow: {fileID: 0}
 --- !u!1 &843117606337059794
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +310,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6915845427496378905}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Board, Assembly-CSharp
         m_MethodName: TryAgain
         m_Mode: 1
@@ -762,7 +727,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6915845427496378905}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Board, Assembly-CSharp
         m_MethodName: NewGame
         m_Mode: 1
