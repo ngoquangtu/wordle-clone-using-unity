@@ -30,6 +30,10 @@ public class Tile : MonoBehaviour
         this.letter = letter;
         text.text = letter.ToString();
     }
+    public char GetLetter()
+    {
+        return this.letter;
+    }
 
     public void SetState(State state)
     {

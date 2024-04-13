@@ -9,8 +9,9 @@ public class CoinManager : MonoBehaviour
 {
     public static CoinManager instance;
     [SerializeField] private TextMeshProUGUI textCoin;
-    private int initCoin = 100;
-    private int targetCoin = 0;
+    private int initCoin = 200;
+    [HideInInspector]
+    public int targetCoin = 0;
     private bool isAnimating = false;
 
     private void Awake()
@@ -47,18 +48,24 @@ public class CoinManager : MonoBehaviour
 
         if (!isAnimating)
         {
-            StartCoroutine(AnimateCoinText(coins));
+            StartCoroutine(AnimateCoinText(coins,1.5f));
         }
     }
 
-    private IEnumerator AnimateCoinText(int coins)
+    public IEnumerator AnimateCoinText(int coins,float delayTime)
     {
         isAnimating = true;
-
-        int startCoin = targetCoin - coins; // Giá trị ban đầu của coin trước khi thay đổi
-        float animationDuration = 1.0f; // Thời gian của animation (tính bằng giây)
+        int startCoin;
+        if(coins<=0)
+        {
+             startCoin = targetCoin;
+        }
+        else
+        {
+             startCoin = targetCoin - coins;
+        }
+        float animationDuration = 1.0f; 
         float elapsedTime = 0f;
-        float delayTime = 1.5f;
         yield return new WaitForSeconds(delayTime);
 
         while (elapsedTime < animationDuration)
@@ -69,7 +76,7 @@ public class CoinManager : MonoBehaviour
             yield return null;
         }
 
-        textCoin.text = targetCoin.ToString(); // Đảm bảo hiển thị số coin đúng khi kết thúc animation
+        textCoin.text = targetCoin.ToString();
         isAnimating = false;
     }
 }

@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
+
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class KeyBoard : MonoBehaviour
 {
@@ -13,6 +13,12 @@ public class KeyBoard : MonoBehaviour
         KeyCode.N, KeyCode.M,
     };
     [SerializeField] private int k;
+    private Button keyRenderer;
+
+    private void Awake()
+    {
+        keyRenderer = GetComponent<Button>();
+    }
     public void keyCode()
     {
         if (Board.Instance.columnIndex < Board.Instance.currentRow.tiles.Length && Board.Instance.enabled)
@@ -24,48 +30,15 @@ public class KeyBoard : MonoBehaviour
     }
     public void enterCode()
     {
-        if (Board.Instance.columnIndex >= Board.Instance.currentRow.tiles.Length && !Board.Instance.HasWon(Board.Instance.currentRow) && Board.Instance.enabled)
+        // Check if Board.Instance is not null and currentRow is assigned
+        if (Board.Instance != null && Board.Instance.currentRow != null && Board.Instance.columnIndex >= Board.Instance.currentRow.tiles.Length && !Board.Instance.HasWon(Board.Instance.currentRow) && Board.Instance.enabled)
         {
+            // Submit the row if conditions are met
             Board.Instance.SubmitRow(Board.Instance.currentRow);
-            SoundManager.instance.playSound(SoundManager.instance.enterSound);
-        }
-        string remaining = Board.Instance.word;
-        for (int i = 0; i < Board.Instance.currentRow.tiles.Length; i++)
-        {
-            Tile tile = Board.Instance.currentRow.tiles[i];
-            
-
-            if (tile.letter == Board.Instance.word[i])
+            // Make sure SoundManager.instance is not null before accessing it
+            if (SoundManager.instance != null)
             {
-                tile.SetState(Board.Instance.correctState);
-
-
-                remaining = remaining.Remove(i, 1);
-                remaining = remaining.Insert(i, " ");
-            }
-            else if (!Board.Instance.word.Contains(tile.letter))
-            {
-                tile.SetState(Board.Instance.incorrectState);
-            }
-        }
-        for (int i = 0; i < Board.Instance.currentRow.tiles.Length; i++)
-        {
-            Tile tile = Board.Instance.currentRow.tiles[i];
-
-            if (tile.state != Board.Instance.correctState && tile.state != Board.Instance.incorrectState)
-            {
-                if (remaining.Contains(tile.letter))
-                {
-                    tile.SetState(Board.Instance.wrongSpotState);
-
-                    int index = remaining.IndexOf(tile.letter);
-                    remaining = remaining.Remove(index, 1);
-                    remaining = remaining.Insert(index, " ");
-                }
-                else
-                {
-                    tile.SetState(Board.Instance.incorrectState);
-                }
+                SoundManager.instance.playSound(SoundManager.instance.enterSound);
             }
         }
     }
@@ -81,5 +54,19 @@ public class KeyBoard : MonoBehaviour
             Board.Instance.invalidWordText.SetActive(false);
         }
 
+    }
+    public char GetLetter()
+    {
+        return (char)SUPPORTED_KEYS[k];
+    }
+    public void SetColor(Color color)
+    {
+        ColorBlock cb = keyRenderer.colors;
+        cb.normalColor = color;
+        cb.highlightedColor = color;
+        cb.pressedColor = color;
+        cb.disabledColor = color;
+        cb.selectedColor = color;
+        keyRenderer.colors = cb;
     }
 }

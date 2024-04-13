@@ -36,7 +36,7 @@ public class Board : MonoBehaviour
     public GameObject invalidWordText;
     public TextMeshProUGUI meaningWordText;
     [HideInInspector] public  Row currentRow;
-
+    public KeyBoardColor keyBoardColor;
     private void Awake()
     {
         if(Instance == null)
@@ -66,6 +66,7 @@ public class Board : MonoBehaviour
     public void NewGame()
     {
         ClearBoard();
+        keyBoardColor.ClearColor();
         SetRandomWord();
         meaningWordText.gameObject.SetActive(false);
         enabled = true;
@@ -88,43 +89,13 @@ public class Board : MonoBehaviour
             word = solutions[randomIndex];
             word = word.ToLower().Trim();
             meaningWordText.text = meaningWords[randomIndex];
+            Debug.Log(word);
         } while (word == savedWord);
     }
 
     private void Update()
     {
         currentRow = rows[rowIndex];
-
-/*        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            columnIndex = Mathf.Max(columnIndex - 1, 0);
-
-            currentRow.tiles[columnIndex].SetLetter('\0');
-            currentRow.tiles[columnIndex].SetState(emptyState);
-
-            invalidWordText.SetActive(false);
-        }
-        else if (columnIndex >= currentRow.tiles.Length)
-        {
-            if (Input.GetKeyDown(KeyCode.Return)) 
-            {
-                SubmitRow(currentRow);
-                SoundManager.instance.playSound(SoundManager.instance.enterSound);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < SUPPORTED_KEYS.Length; i++)
-            {
-                if (Input.GetKeyDown(SUPPORTED_KEYS[i]))
-                {
-                    currentRow.tiles[columnIndex].SetLetter((char)SUPPORTED_KEYS[i]);
-                    currentRow.tiles[columnIndex].SetState(occupiedState);
-                    columnIndex++;
-                    break;
-                }
-            }
-        }*/
     }
 
     public void SubmitRow(Row row)
@@ -137,7 +108,7 @@ public class Board : MonoBehaviour
         }
 
         string remaining = word;
-
+        keyBoardColor.Colorize(remaining, row.Word);
         // check correct/incorrect letters first
         for (int i = 0; i < row.tiles.Length; i++)
         {
@@ -229,6 +200,7 @@ public class Board : MonoBehaviour
         }
         rowIndex = 0;
         columnIndex = 0;
+
     }
 
     private void OnEnable()
